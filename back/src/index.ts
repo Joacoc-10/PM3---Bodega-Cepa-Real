@@ -1,4 +1,6 @@
-const num1: number = 5;
-const num2: number = 10;
+import { PORT } from "./config/envs";
+import app from "./server";
 
-console.log(num1, num2);
+app.listen(PORT, () => {
+  console.log(`El servidor esta escuchando en el puerto ${PORT}`);
+});
