@@ -1,14 +1,22 @@
 import { Request, Response } from "express";
 import { AppointmentRegisterDTO } from "../dtos/AppointmentsDTO";
+import {
+  cancelAppointemtnsService,
+  getAppointementByIdService,
+  getAppointmentService,
+  registerAppointmentService,
+} from "../services/appointmentService";
+import { IAppointment } from "../interfaces/AppointmentInterface";
 
 export const getAppointmentsController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
+    const appointments: IAppointment[] = await getAppointmentService();
     res.status(200).json({
       msg: "Obtener el listado de todos los turnos de todos los usuarios",
-      data: [],
+      data: appointments,
     });
   } catch (error) {
     res.status(500).json({
@@ -23,9 +31,12 @@ export const getAppointmentByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
+    const appointmentFound: IAppointment = await getAppointementByIdService(
+      parseInt(req.params.id, 10)
+    );
     res.status(200).json({
       msg: "Obtener el detalle de un turno especifico",
-      data: req.params.id,
+      data: appointmentFound,
     });
   } catch (error) {
     res.status(500).json({
@@ -40,9 +51,12 @@ export const registerAppointmentsController = async (
   res: Response
 ): Promise<void> => {
   try {
+    const appointmentCreate: IAppointment = await registerAppointmentService(
+      req.body
+    );
     res.status(200).json({
       msg: "Agendar un nuevo turno",
-      data: req.body,
+      data: appointmentCreate,
     });
   } catch (error) {
     res.status(500).json({
@@ -57,9 +71,9 @@ export const cancelStatusAppointmentsController = async (
   res: Response
 ): Promise<void> => {
   try {
+    await cancelAppointemtnsService(parseInt(req.params.id, 10));
     res.status(200).json({
-      msg: "Cambiar el estatus de un turno a cancelled",
-      data: req.params.id,
+      msg: "Cita cancelada",
     });
   } catch (error) {
     res.status(500).json({
