@@ -1,50 +1,49 @@
-import { ICredential } from "../interfaces/CredentialInterface";
+import { EntityManager } from "typeorm";
+import { CredentialModel } from "../config/data-source";
+import { Credential } from "../entities/Credential.entity";
 import bcrypt from "bcrypt";
 
-const credentials: ICredential[] = [];
-
-let identificador: number = 1;
 const salt_rounds = 10;
 
 export const createCredential = async (
+  entityManager: EntityManager,
   username: string,
   password: string
-): Promise<number> => {
-  if (checkUserExist(username)) {
-    throw new Error(`El usuario con username: ${username} ya existe`);
-  }
+): Promise<Credential> => {
+  await checkUserExist(username);
   const hashedPassword = await bcrypt.hash(password, salt_rounds);
-  const newCredential: ICredential = {
-    id: identificador,
-    username: username,
+
+  const newCredential = entityManager.create(Credential, {
+    username,
     password: hashedPassword,
-  };
-  credentials.push(newCredential);
-  identificador++;
-  return newCredential.id;
+  });
+
+  const credentialSave = await entityManager.save(newCredential);
+  return credentialSave;
 };
 
-const checkUserExist = (username: string): boolean => {
-  const usernameFound: ICredential | undefined = credentials.find(
-    (cred) => cred.username === username
-  );
-  return !!usernameFound;
+const checkUserExist = async (username: string): Promise<void> => {
+  const usernameFound: Credential | null = await CredentialModel.findOne({
+    where: { username },
+  });
+  if (usernameFound)
+    throw Error(`El usuario con username ${username} ya existe`);
 };
 
 export const checkUserCredentials = async (
   username: string,
   password: string
-): Promise<number | undefined> => {
-  const usernameFound: ICredential | undefined = credentials.find(
-    (cred) => cred.username === username
-  );
-  if (!usernameFound) throw new Error("El usuario no existe");
+): Promise<Credential> => {
+  const credentialFound: Credential | null = await CredentialModel.findOne({
+    where: { username },
+  });
+  if (!credentialFound) throw new Error("El usuario no existe");
   const isPasswordCorrect = await bcrypt.compare(
     password,
-    usernameFound.password
+    credentialFound.password
   );
   if (isPasswordCorrect) {
-    return usernameFound.id;
+    return credentialFound;
   } else {
     throw new Error("La contraseña es incorrecta");
   }

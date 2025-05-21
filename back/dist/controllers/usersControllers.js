@@ -10,11 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUserController = exports.registerUserController = exports.getUserByIdController = exports.getUsersController = void 0;
+const usersServices_1 = require("../services/usersServices");
 const getUsersController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const users = yield (0, usersServices_1.getUserService)();
         res.status(200).json({
             msg: "Obtener el listado de todos los usuarios",
-            data: [],
+            data: users,
         });
     }
     catch (error) {
@@ -27,9 +29,10 @@ const getUsersController = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.getUsersController = getUsersController;
 const getUserByIdController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const userFound = yield (0, usersServices_1.getUserByIdService)(parseInt(req.params.id, 10));
         res.status(200).json({
             msg: "Obtener el detalle de un usuario especifico",
-            data: req.params.id,
+            data: userFound,
         });
     }
     catch (error) {
@@ -42,15 +45,16 @@ const getUserByIdController = (req, res) => __awaiter(void 0, void 0, void 0, fu
 exports.getUserByIdController = getUserByIdController;
 const registerUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const newUser = yield (0, usersServices_1.registerUserService)(req.body);
         res.status(200).json({
             msg: "Registro un nuevo usuario",
-            data: req.body,
+            data: newUser,
         });
     }
     catch (error) {
         res.status(500).json({
             msg: "Ocurrio un error",
-            error: error,
+            error: error instanceof Error ? error.message : "Error desconocido",
         });
     }
 });
@@ -65,7 +69,7 @@ const loginUserController = (req, res) => __awaiter(void 0, void 0, void 0, func
     catch (error) {
         res.status(500).json({
             msg: "Ocurrio un error",
-            error: error,
+            error: error instanceof Error ? error.message : "Error desconocido",
         });
     }
 });

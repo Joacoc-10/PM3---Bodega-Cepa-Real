@@ -1,32 +1,47 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = getAllUsers;
-exports.getUserById = getUserById;
-exports.createUser = createUser;
-const index_1 = require("./index");
-const credentialsServices_1 = require("./credentialsServices"); // Importar el servicio de credenciales
-// Implementar una función que pueda retornar el arreglo completo de usuarios.
-function getAllUsers() {
-    return index_1.users;
-}
-// Implementar una función que pueda retornar un elemento del arreglo que haya sido identificado por id.
-function getUserById(id) {
-    return index_1.users.find((user) => user.id === id);
-}
-// Implementar una función que pueda crear un nuevo usuario.
-// Debe crear su correspondiente par de credenciales y guardar el ID.
-function createUser(name, email, birthdate, nDni, username, password_plain) {
-    // 1. Crear las credenciales primero
-    const credentialsId = (0, credentialsServices_1.createCredential)(username, password_plain); // Llama al servicio de credenciales
-    // 2. Crear el nuevo usuario con el ID de las credenciales
+exports.registerUserService = exports.getUserByIdService = exports.getUserService = void 0;
+const credentialsServices_1 = require("./credentialsServices");
+const users = [];
+let identificador = 1;
+const getUserService = () => __awaiter(void 0, void 0, void 0, function* () {
+    const nuevoArray = users.map((user) => {
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        };
+    });
+    return nuevoArray;
+});
+exports.getUserService = getUserService;
+const getUserByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const userFound = users.find((user) => user.id === id);
+    if (!userFound)
+        throw Error(`El usuario con el Id: ${id}, no fue encontrado`);
+    return userFound;
+});
+exports.getUserByIdService = getUserByIdService;
+const registerUserService = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const credentialId = yield (0, credentialsServices_1.createCredential)(user.username, user.password);
     const newUser = {
-        id: (0, index_1.generateUserId)(),
-        name: name,
-        email: email,
-        birthdate: birthdate,
-        nDni: nDni,
-        credentialsId: credentialsId, // Asigna el ID de credenciales recibido
+        id: identificador++,
+        name: user.name,
+        email: user.email,
+        nDni: user.nDni,
+        birthdate: new Date(user.birthdate),
+        credentialsId: credentialId,
     };
-    index_1.users.push(newUser);
+    users.push(newUser);
     return newUser;
-}
+});
+exports.registerUserService = registerUserService;

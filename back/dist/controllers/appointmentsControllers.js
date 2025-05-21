@@ -10,11 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cancelStatusAppointmentsController = exports.registerAppointmentsController = exports.getAppointmentByIdController = exports.getAppointmentsController = void 0;
+const appointmentService_1 = require("../services/appointmentService");
 const getAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const appointments = yield (0, appointmentService_1.getAppointmentService)();
         res.status(200).json({
             msg: "Obtener el listado de todos los turnos de todos los usuarios",
-            data: [],
+            data: appointments,
         });
     }
     catch (error) {
@@ -27,9 +29,10 @@ const getAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0
 exports.getAppointmentsController = getAppointmentsController;
 const getAppointmentByIdController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const appointmentFound = yield (0, appointmentService_1.getAppointementByIdService)(parseInt(req.params.id, 10));
         res.status(200).json({
             msg: "Obtener el detalle de un turno especifico",
-            data: req.params.id,
+            data: appointmentFound,
         });
     }
     catch (error) {
@@ -42,9 +45,10 @@ const getAppointmentByIdController = (req, res) => __awaiter(void 0, void 0, voi
 exports.getAppointmentByIdController = getAppointmentByIdController;
 const registerAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const appointmentCreate = yield (0, appointmentService_1.registerAppointmentService)(req.body);
         res.status(200).json({
             msg: "Agendar un nuevo turno",
-            data: req.body,
+            data: appointmentCreate,
         });
     }
     catch (error) {
@@ -57,9 +61,9 @@ const registerAppointmentsController = (req, res) => __awaiter(void 0, void 0, v
 exports.registerAppointmentsController = registerAppointmentsController;
 const cancelStatusAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        yield (0, appointmentService_1.cancelAppointemtnsService)(parseInt(req.params.id, 10));
         res.status(200).json({
-            msg: "Cambiar el estatus de un turno a cancelled",
-            data: req.params.id,
+            msg: "Cita cancelada",
         });
     }
     catch (error) {

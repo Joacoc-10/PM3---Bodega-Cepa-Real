@@ -3,9 +3,11 @@ import { UserDTO, UserLoginDTO, UserRegisterDTO } from "../dtos/UserDTO";
 import {
   getUserByIdService,
   getUserService,
+  loginUserService,
   registerUserService,
 } from "../services/usersServices";
-import { IUser } from "../interfaces/UserInterface";
+import { User } from "../entities/User.entity";
+import { PostgresErorr } from "../interfaces/PostgreErrorInterface";
 
 export const getUsersController = async (
   req: Request,
@@ -38,7 +40,7 @@ export const getUserByIdController = async (
       data: userFound,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(404).json({
       msg: "Ocurrio un error",
       error: error instanceof Error ? error.message : "Error desconocido",
     });
@@ -50,15 +52,22 @@ export const registerUserController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const newUser: IUser = await registerUserService(req.body);
-    res.status(200).json({
+    const newUser: User = await registerUserService(req.body);
+    res.status(201).json({
       msg: "Registro un nuevo usuario",
       data: newUser,
     });
   } catch (error) {
-    res.status(500).json({
+    const err = error as PostgresErorr;
+
+    res.status(400).json({
       msg: "Ocurrio un error",
-      error: error instanceof Error ? error.message : "Error desconocido",
+      error:
+        error instanceof Error
+          ? err.detail
+            ? err.detail
+            : err.message
+          : "Error desconocido",
     });
   }
 };
@@ -68,12 +77,14 @@ export const loginUserController = async (
   res: Response
 ): Promise<void> => {
   try {
+    const user: User | null = await loginUserService(req.body);
     res.status(200).json({
       msg: "Login del usuario a la aplicacion",
-      data: req.body,
+      login: true,
+      user: user,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
       msg: "Ocurrio un error",
       error: error instanceof Error ? error.message : "Error desconocido",
     });
