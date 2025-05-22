@@ -1,0 +1,17 @@
+.pageContainer {
+  background-color: #0579f4e7;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.logo {
+  margin: 0;
+  font-size: 2em;
+}

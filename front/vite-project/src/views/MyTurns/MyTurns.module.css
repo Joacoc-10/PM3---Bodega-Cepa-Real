@@ -1,0 +1,18 @@
+.myTurnsContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.noTurnsMessage {
+  color: lightgray;
+  font-size: 1.5em;
+  margin-top: 50px;
+}
