@@ -7,6 +7,6 @@ export interface IAppointment {
 }
 
 export enum Status {
-  active = "Active",
-  cancelled = "Cancelled",
+  active = "Activa",
+  cancelled = "Cancelada",
 }

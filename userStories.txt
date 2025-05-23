@@ -1,0 +1,42 @@
+USER STORIES
+
+1. Host:
+● Quiero ver una pagina de inicio con una barra de navegacion que me de las opciones de Registrarme, Reservar turno(que indique un
+mensaje que debo de estar registrado para hacerlo), Reservas(para poder ver las reservas hechas y cancelarlas de ser necesario),
+Contacto(Pagina de contacto con el restaurante)
+
+2. Creacion de usuario:
+● Como usuario invitado, quiero poder logearme en la plataforma para reservar turno
+● Criterios de aceptacion:
+El usuario debe poder registrarse proporcionando correo electronico, nombre, apellido y una contraseña
+El sistema debe poder autetnticar el usuario mediante el correo y la contraseña
+no se podra reservar turno sin estar registrado ni autenticado
+
+3. Reserva de turno:
+● Como usuario logeado y autenticado quiero poder agendar turno dentro del horario de apertura (12am - 12pm) y dentro de los 
+dias de apertura (Martes a Domingo)
+● Critrerios de aceptacion:
+El usuario solo puede reservar turno en horario y dais de apertura
+El intentar reservar fuera de dias y horario, debera mrcar un mensaje de error
+
+4.Visualizacion de turno:
+●Como usuario autenticado, quiero ver un listado de mis turnos reservados, para
+poder gestionar mis citas.
+● Criterios de aceptación:
+El usuario debe poder ver una lista de turnos futuros y pasados.
+Cada turno debe mostrar la fecha, hora y la opción de cancelarlo si aún es
+posible
+
+5. Cancelacion de turno:
+● Como usuario autenticado, quiero poder cancelar mi turno hasta un día antes de la
+fecha reservada, para liberar el espacio si no puedo asistir.
+● Criterios de aceptación:
+El usuario debe poder cancelar un turno hasta el día anterior a la cita.
+No podrá cancelar el turno el mismo día de la cita.
+Al cancelar, debe de aparecer el estado como "cancelado"
+
+6. Contacto:
+● Como usuario autenticado o no, quiero poder enviar un mensaje al restaurante por mas infroamcion
+● Criterios de aceptación:
+Tener un numero a donde llamar
+Tener un formulario para enviar un mail al restaurante

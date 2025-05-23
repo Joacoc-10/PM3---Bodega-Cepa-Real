@@ -1,10 +1,21 @@
-import { useState } from "react";
-import myAppointments from "../../helpers/myAppointments";
+import { useEffect, useState } from "react";
 import Turn from "../../components/Turns/Turns";
 import myTurnsStyles from "../MyTurns/MyTurns.module.css";
+import axios from "axios";
 
 export default function MyTurns() {
-  const [turns, setTurns] = useState(myAppointments);
+  const [turns, setTurns] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/appointments")
+      .then(({ data }) => {
+        setTurns(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className={myTurnsStyles.myTurnsContainer}>

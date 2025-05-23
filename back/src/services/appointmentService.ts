@@ -8,7 +8,6 @@ export const getAppointmentService = async (): Promise<Appointment[]> => {
   const appointments: Appointment[] = await AppointmentModel.find();
   if (appointments.length === 0) throw new Error(` No hay citas registradas`);
   return appointments;
-  // return await AppointmentModel.find();
 };
 
 export const getAppointementByIdService = async (
@@ -39,22 +38,6 @@ export const registerAppointmentService = async (
     },
   });
 
-  // const appointmetnFound = appointments.find(
-  //   (app) =>
-  //     app.userId === appointment.userId &&
-  //     app.time === appointment.time &&
-  //     new Date(app.date).getTime() === new Date(appointment.date).getTime()
-  // );
-  // if (appointmetnFound) throw Error(`La cita ya existe`);
-
-  // const newAppointment: IAppointment = {
-  //   date: appointment.date,
-  //   time: appointment.time,
-  //   status: Status.active,
-  //   userId: userFound?.id || 0,
-  // };
-  // appointments.push(newAppointment);
-  // return newAppointment;
   return await AppointmentModel.save(newAppointment);
 };
 
