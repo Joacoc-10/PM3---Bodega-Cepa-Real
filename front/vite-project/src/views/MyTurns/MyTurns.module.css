@@ -1,7 +1,12 @@
 .myTurnsContainer {
   text-align: center;
   padding: 20px;
-  background-color: rgba(177, 169, 169, 0.456);
+}
+
+.myTurnsTitle {
+  font-size: 2em;
+  border-bottom: 1px solid black;
+  margin: 1em 1em;
 }
 
 .cardsContainer {

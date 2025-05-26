@@ -20,7 +20,7 @@ export default function MyTurns() {
   return (
     <div className={myTurnsStyles.myTurnsContainer}>
       <div>
-        <h1> Mis Reservas</h1>
+        <h1 className={myTurnsStyles.myTurnsTitle}> Mis Reservas</h1>
       </div>
       <div className={myTurnsStyles.cardsContainer}>
         {turns.length > 0 ? (

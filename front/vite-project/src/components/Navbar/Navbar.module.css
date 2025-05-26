@@ -4,15 +4,22 @@
   padding: 0;
   display: flex;
   gap: 25px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .navList li a {
-  color: white;
+  color: rgb(114, 111, 111);
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
+  padding: 12px 25px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  display: block;
 }
 
 .navList li a:hover {
-  color: #add8e6;
+  color: #eff2f5;
 }
