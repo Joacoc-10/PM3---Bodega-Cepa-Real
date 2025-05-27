@@ -8,6 +8,7 @@ import bodegaCepaReal from "../../assets/bodegaCepaRea;1.jpeg";
 import restaurante from "../../assets/restauranteBodega.jpeg";
 import terrazaBodega from "../../assets/terrazaBodega.jpeg";
 import catacion1 from "../../assets/catacion1.jpeg";
+import Catas from "../Catas/Catas";
 
 const Home = () => {
   return (
@@ -76,6 +77,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <Catas />
     </div>
   );
 };

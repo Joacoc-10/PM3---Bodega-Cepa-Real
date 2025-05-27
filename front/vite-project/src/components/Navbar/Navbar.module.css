@@ -8,7 +8,8 @@
   justify-content: flex-end;
 }
 
-.navList li a {
+.navList li a,
+button {
   color: rgb(114, 111, 111);
   text-decoration: none;
   font-weight: bold;
