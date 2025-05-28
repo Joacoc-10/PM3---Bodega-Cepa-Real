@@ -1,11 +1,23 @@
 import turnStyles from "../Turns/Turns.module.css";
 
-export default function Turn({ id, date, time, status }) {
+export default function Turn({ id, date, time, status, onCancel }) {
   const statusColor =
     status === "Activa" ? "green" : status === "Cancelada" ? "red" : "gray";
 
+  const isCancelled = status === "Cancelada";
+
+  const cardClassName = isCancelled
+    ? `${turnStyles.turnCard} ${turnStyles.cancelledCard}`
+    : turnStyles.turnCard;
+
+  const handleCancelClick = () => {
+    if (onCancel && !isCancelled) {
+      onCancel(id);
+    }
+  };
+
   return (
-    <div className={turnStyles.turnCard}>
+    <div className={cardClassName}>
       <div className={turnStyles.cardHeader}>
         <h3> Reserva #{id}</h3>
         <span
@@ -23,6 +35,16 @@ export default function Turn({ id, date, time, status }) {
           <strong> Hora:</strong> <span> {time} </span>
         </p>
       </div>
+
+      <button
+        onClick={handleCancelClick}
+        className={`${turnStyles.cancelButton} ${
+          isCancelled ? turnStyles.disabledButton : ""
+        }`}
+        disabled={isCancelled}
+      >
+        Cancelar Turno
+      </button>
     </div>
   );
 }

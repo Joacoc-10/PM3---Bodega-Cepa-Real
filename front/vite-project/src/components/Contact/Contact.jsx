@@ -33,15 +33,11 @@ const Contact = () => {
           <ul className={ContactStyle.contactList}>
             <li>
               <strong> Telefono: </strong>
-              <a class="numero" href="tel:+34624789446 ">
-                +34624789446
-              </a>
+              <a href="tel:+34624789446 ">+34624789446</a>
             </li>
             <li>
               <strong> Email: </strong>
-              <a class="email" href="CepaReal@Bodega.com">
-                CepaReal@Bodega.com
-              </a>
+              <a href="CepaReal@Bodega.com">CepaReal@Bodega.com</a>
             </li>
           </ul>
         </div>

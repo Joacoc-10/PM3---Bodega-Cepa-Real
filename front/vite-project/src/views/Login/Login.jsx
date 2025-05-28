@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { loginFormValidate } from "../../helpers/registerFormValidate";
 import LoginStyles from "../Register/Register.module.css";
 
-export default function Login() {
+export default function Login({ onLoginSucess }) {
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -26,6 +26,9 @@ export default function Login() {
             icon: "success",
             title: "Usuario logeado correctamente",
           });
+          if (onLoginSucess) {
+            onLoginSucess();
+          }
         })
         .catch((err) => {
           if (err.status === 400)

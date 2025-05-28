@@ -17,11 +17,16 @@ const NavBar = ({ isLogged, onLogout }) => {
             )}
           </li>
           <li>
-            <a href="/contact"> Contacto </a>
+            <Link to="/contact"> Contacto </Link>
           </li>
+          {!isLogged && (
+            <li>
+              <Link to="/login"> Iniciar Sesión</Link>
+            </li>
+          )}
           {isLogged && (
             <li>
-              <button onClick={onLogout}> Cerrar sesion </button>
+              <button onClick={onLogout}>Cerrar sesion</button>
             </li>
           )}
         </ul>
@@ -31,7 +36,3 @@ const NavBar = ({ isLogged, onLogout }) => {
 };
 
 export default NavBar;
-
-{
-  /* <Link to="/login"> Reservas </Link> */
-}
