@@ -1,7 +1,8 @@
 .titulos {
   font-size: 2em;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #550000;
   margin: 2em 1em 0 1em;
+  color: #550000;
 }
 
 .parrafoHistoria {

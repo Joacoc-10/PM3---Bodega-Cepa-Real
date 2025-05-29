@@ -7,11 +7,8 @@ import Swal from "sweetalert2";
 
 export default function MyTurns() {
   const [turns, setTurns] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const fetchUserTurns = () => {
-    setLoading(true);
-
     const userJSON = localStorage.getItem("user");
     let userId = null;
 
@@ -21,7 +18,7 @@ export default function MyTurns() {
         title: "Usuario no encontrado",
         text: "Para ver tus reservas, por favor inicia sesión.",
       });
-      setLoading(false);
+
       setTurns([]);
       return;
     }
@@ -35,7 +32,7 @@ export default function MyTurns() {
         title: "Error de usuario",
         text: "Hubo un problema al cargar tu información de usuario.",
       });
-      setLoading(false);
+
       setTurns([]);
       return;
     }
@@ -46,7 +43,7 @@ export default function MyTurns() {
         title: "ID de usuario no disponible",
         text: "No se pudo identificar tu usuario para cargar las reservas.",
       });
-      setLoading(false);
+
       setTurns([]);
       return;
     }
@@ -80,9 +77,6 @@ export default function MyTurns() {
           text: errorMessage,
         });
         setTurns([]);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
@@ -143,17 +137,9 @@ export default function MyTurns() {
     });
   };
 
-  if (loading) {
-    return (
-      <div className={myTurnsStyles.myTurnsContainer}>
-        Cargando tus reservas...
-      </div>
-    );
-  }
-
   return (
     <div className={myTurnsStyles.myTurnsContainer}>
-      <Reservations />
+      <Reservations onReservationSuccess={fetchUserTurns} />
       <div>
         <h1 className={myTurnsStyles.myTurnsTitle}> Mis Reservas</h1>
       </div>
@@ -171,7 +157,6 @@ export default function MyTurns() {
           ))
         ) : (
           <h1 className={myTurnsStyles.noTurnsMessage}>
-            {" "}
             No hay turnos para mostrar
           </h1>
         )}

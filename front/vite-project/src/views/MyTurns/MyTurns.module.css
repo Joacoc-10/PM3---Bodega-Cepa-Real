@@ -5,8 +5,9 @@
 
 .myTurnsTitle {
   font-size: 2em;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #550000;
   margin: 1em 1em;
+  color: #550000;
 }
 
 .cardsContainer {
@@ -18,7 +19,7 @@
 }
 
 .noTurnsMessage {
-  color: lightgray;
+  color: rgba(0, 0, 0, 0.731);
   font-size: 1.5em;
-  margin-top: 50px;
+  margin-top: 20px;
 }

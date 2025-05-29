@@ -32,9 +32,7 @@ function App() {
 
   const handleLogin = () => {
     setIsLogged(true);
-    setTimeout(() => {
-      navigate("/myturns");
-    }, 0);
+    navigate("/home");
   };
 
   const handleLogout = () => {
@@ -82,14 +80,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <Header />
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/myturns" element={<MyTurns />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes> */
-}

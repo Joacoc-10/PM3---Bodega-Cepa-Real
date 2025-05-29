@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { loginFormValidate } from "../../helpers/registerFormValidate";
 import LoginStyles from "../Register/Register.module.css";
+import { Link } from "react-router-dom";
 
 export default function Login({ onLoginSucess }) {
   const formik = useFormik({
@@ -89,6 +90,15 @@ export default function Login({ onLoginSucess }) {
         >
           Iniciar sesion
         </button>
+
+        <div className={LoginStyles.loginQuestionWrapper}>
+          <p className={LoginStyles.loginQuestionText}>
+            ¿Aún no tienes cuenta?
+            <Link to="/register" className={LoginStyles.loginLinkButton}>
+              Regístrate
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );

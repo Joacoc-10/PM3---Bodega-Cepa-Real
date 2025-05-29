@@ -39,7 +39,7 @@ export const registerFormValidate = (input) => {
   }
 
   if (!input.password.trim()) {
-    errors.username = "El contraseña es requerida ";
+    errors.password = "El contraseña es requerida ";
   } else if (input.password.length < 8) {
     errors.password = "La contraseña debe contener al menos 8 caracteres";
   } else if (!/[A-Z]/.test(input.password)) {
@@ -47,6 +47,8 @@ export const registerFormValidate = (input) => {
   } else if (!/[0-9]/.test(input.password)) {
     errors.password = "Debe contener al menos un numero";
   }
+
+  return errors;
 };
 
 export const loginFormValidate = (input) => {
@@ -62,7 +64,7 @@ export const loginFormValidate = (input) => {
   }
 
   if (!input.password.trim()) {
-    errors.username = "El contraseña es requerida ";
+    errors.password = "El contraseña es requerida ";
   } else if (input.password.length < 8) {
     errors.password = "La contraseña debe contener al menos 8 caracteres";
   } else if (!/[A-Z]/.test(input.password)) {
@@ -70,6 +72,8 @@ export const loginFormValidate = (input) => {
   } else if (!/[0-9]/.test(input.password)) {
     errors.password = "Debe contener al menos un numero";
   }
+
+  return errors;
 };
 
 const isTimeValid = (time) => {

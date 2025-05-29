@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import RegisterStyles from "../Register/Register.module.css";
 import { Link } from "react-router-dom";
 
-export default function Register() {
+export default function Register({ onRegisterSucess }) {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -34,6 +34,9 @@ export default function Register() {
               icon: "success",
             });
             formikHelpers.resetForm();
+            if (onRegisterSucess) {
+              onRegisterSucess();
+            }
           }
         })
         .catch((err) => {
@@ -109,7 +112,7 @@ export default function Register() {
             onBlur={formik.handleBlur}
             value={formik.values.birthdate}
           />
-          {formik.errors.birthdate && formik.errors.birthadate ? (
+          {formik.errors.birthdate && formik.errors.birthdate ? (
             <label className={RegisterStyles.errorMessage}>
               {formik.errors.birthdate}
             </label>
