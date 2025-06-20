@@ -36,7 +36,7 @@ const getUserByIdController = (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
     catch (error) {
-        res.status(500).json({
+        res.status(404).json({
             msg: "Ocurrio un error",
             error: error instanceof Error ? error.message : "Error desconocido",
         });
@@ -46,28 +46,35 @@ exports.getUserByIdController = getUserByIdController;
 const registerUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = yield (0, usersServices_1.registerUserService)(req.body);
-        res.status(200).json({
+        res.status(201).json({
             msg: "Registro un nuevo usuario",
             data: newUser,
         });
     }
     catch (error) {
-        res.status(500).json({
+        const err = error;
+        res.status(400).json({
             msg: "Ocurrio un error",
-            error: error instanceof Error ? error.message : "Error desconocido",
+            error: error instanceof Error
+                ? err.detail
+                    ? err.detail
+                    : err.message
+                : "Error desconocido",
         });
     }
 });
 exports.registerUserController = registerUserController;
 const loginUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const user = yield (0, usersServices_1.loginUserService)(req.body);
         res.status(200).json({
             msg: "Login del usuario a la aplicacion",
-            data: req.body,
+            login: true,
+            user: user,
         });
     }
     catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             msg: "Ocurrio un error",
             error: error instanceof Error ? error.message : "Error desconocido",
         });

@@ -13,36 +13,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkUserCredentials = exports.createCredential = void 0;
+const data_source_1 = require("../config/data-source");
+const Credential_entity_1 = require("../entities/Credential.entity");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const credentials = [];
-let identificador = 1;
 const salt_rounds = 10;
-const createCredential = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
-    if (checkUserExist(username)) {
-        throw new Error(`El usuario con username: ${username} ya existe`);
-    }
+const createCredential = (entityManager, username, password) => __awaiter(void 0, void 0, void 0, function* () {
+    yield checkUserExist(username);
     const hashedPassword = yield bcrypt_1.default.hash(password, salt_rounds);
-    const newCredential = {
-        id: identificador,
-        username: username,
+    const newCredential = entityManager.create(Credential_entity_1.Credential, {
+        username,
         password: hashedPassword,
-    };
-    credentials.push(newCredential);
-    identificador++;
-    return newCredential.id;
+    });
+    const credentialSave = yield entityManager.save(newCredential);
+    return credentialSave;
 });
 exports.createCredential = createCredential;
-const checkUserExist = (username) => {
-    const usernameFound = credentials.find((cred) => cred.username === username);
-    return !!usernameFound;
-};
+const checkUserExist = (username) => __awaiter(void 0, void 0, void 0, function* () {
+    const usernameFound = yield data_source_1.CredentialModel.findOne({
+        where: { username },
+    });
+    if (usernameFound)
+        throw Error(`El usuario con username ${username} ya existe`);
+});
 const checkUserCredentials = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
-    const usernameFound = credentials.find((cred) => cred.username === username);
-    if (!usernameFound)
+    const credentialFound = yield data_source_1.CredentialModel.findOne({
+        where: { username },
+    });
+    if (!credentialFound)
         throw new Error("El usuario no existe");
-    const isPasswordCorrect = yield bcrypt_1.default.compare(password, usernameFound.password);
+    const isPasswordCorrect = yield bcrypt_1.default.compare(password, credentialFound.password);
     if (isPasswordCorrect) {
-        return usernameFound.id;
+        return credentialFound;
     }
     else {
         throw new Error("La contraseña es incorrecta");

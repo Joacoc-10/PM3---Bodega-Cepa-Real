@@ -20,7 +20,7 @@ const getAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0
         });
     }
     catch (error) {
-        res.status(500).json({
+        res.status(404).json({
             msg: "Ocurrio un error",
             error: error instanceof Error ? error.message : "Error desconocido",
         });
@@ -29,14 +29,15 @@ const getAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0
 exports.getAppointmentsController = getAppointmentsController;
 const getAppointmentByIdController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const appointmentFound = yield (0, appointmentService_1.getAppointementByIdService)(parseInt(req.params.id, 10));
+        const id = parseInt(req.params.id, 10);
+        const appointmentFound = yield (0, appointmentService_1.getAppointementByIdService)(id);
         res.status(200).json({
             msg: "Obtener el detalle de un turno especifico",
             data: appointmentFound,
         });
     }
     catch (error) {
-        res.status(500).json({
+        res.status(404).json({
             msg: "Ocurrio un error",
             error: error instanceof Error ? error.message : "Error desconocido",
         });
@@ -46,13 +47,13 @@ exports.getAppointmentByIdController = getAppointmentByIdController;
 const registerAppointmentsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const appointmentCreate = yield (0, appointmentService_1.registerAppointmentService)(req.body);
-        res.status(200).json({
+        res.status(201).json({
             msg: "Agendar un nuevo turno",
             data: appointmentCreate,
         });
     }
     catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             msg: "Ocurrio un error",
             error: error instanceof Error ? error.message : "Error desconocido",
         });
@@ -67,7 +68,7 @@ const cancelStatusAppointmentsController = (req, res) => __awaiter(void 0, void 
         });
     }
     catch (error) {
-        res.status(500).json({
+        res.status(404).json({
             msg: "Ocurrio un error",
             error: error instanceof Error ? error.message : "Error desconocido",
         });

@@ -37,6 +37,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLogged(false);
+    localStorage.removeItem("user");
     navigate("/home");
     setTimeout(() => {
       navigate("/home");
@@ -70,7 +71,13 @@ function App() {
 
         <Route
           path="/myturns"
-          element={isLogged ? <MyTurns /> : <Navigate to="/login" replace />}
+          element={
+            isLogged ? (
+              <MyTurns isLogged={isLogged} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
 
         <Route path="*" element={<Error404 />} />

@@ -9,56 +9,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Appointment = void 0;
 const typeorm_1 = require("typeorm");
-const Credential_entity_1 = require("./Credential.entity");
-const Appointment_entity_1 = require("./Appointment.entity");
-let User = class User {
+const AppointmentInterface_1 = require("../interfaces/AppointmentInterface");
+const User_entity_1 = require("./User.entity");
+let Appointment = class Appointment {
 };
-exports.User = User;
+exports.Appointment = Appointment;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)({
-        type: "varchar",
-        length: 100,
-        nullable: false,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "name", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false, unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Appointment.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "date", nullable: false }),
     __metadata("design:type", Date)
-], User.prototype, "birthdate", void 0);
+], Appointment.prototype, "date", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "integer", nullable: false, unique: true }),
-    __metadata("design:type", Number)
-], User.prototype, "nDni", void 0);
+    (0, typeorm_1.Column)({ type: "varchar", length: 5, nullable: false }),
+    __metadata("design:type", String)
+], Appointment.prototype, "time", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Credential_entity_1.Credential, { cascade: true }),
+    (0, typeorm_1.Column)({
+        type: "varchar",
+        length: 10,
+        nullable: false,
+        default: AppointmentInterface_1.Status.active,
+    }),
+    __metadata("design:type", String)
+], Appointment.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => User_entity_1.User, (user) => user.appointments, { nullable: false }),
     (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Credential_entity_1.Credential)
-], User.prototype, "credentials", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => Appointment_entity_1.Appointment, (appointment) => appointment.user),
-    __metadata("design:type", Array)
-], User.prototype, "appointments", void 0);
+    __metadata("design:type", User_entity_1.User)
+], Appointment.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "createAt", void 0);
+], Appointment.prototype, "creatAt", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], User.prototype, "updateAt", void 0);
-exports.User = User = __decorate([
+], Appointment.prototype, "updateAt", void 0);
+exports.Appointment = Appointment = __decorate([
     (0, typeorm_1.Entity)({
-        name: "users",
+        name: "appointments",
     })
-], User);
+], Appointment);

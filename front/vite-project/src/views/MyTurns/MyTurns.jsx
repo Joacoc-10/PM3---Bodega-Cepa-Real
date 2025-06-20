@@ -5,7 +5,7 @@ import axios from "axios";
 import Reservations from "../ReservationsForm/Reservations";
 import Swal from "sweetalert2";
 
-export default function MyTurns() {
+export default function MyTurns({ isLogged }) {
   const [turns, setTurns] = useState([]);
 
   const fetchUserTurns = () => {
@@ -13,6 +13,7 @@ export default function MyTurns() {
     let userId = null;
 
     if (!userJSON) {
+      setTurns([]);
       Swal.fire({
         icon: "warning",
         title: "Usuario no encontrado",
@@ -81,8 +82,12 @@ export default function MyTurns() {
   };
 
   useEffect(() => {
-    fetchUserTurns();
-  }, []);
+    if (isLogged) {
+      fetchUserTurns();
+    } else {
+      setTurns([]);
+    }
+  }, [isLogged]);
 
   const handleCancelTurn = (userId) => {
     Swal.fire({

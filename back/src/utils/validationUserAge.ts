@@ -9,9 +9,9 @@ export const validationUserAge = (username: string, date: Date): void => {
       400,
       `El usuario ${username} no puede registrarse con una fecha de nacimiento del futoro`
     );
-  if (age < 15)
+  if (age < 18)
     throw new CustomError(
       400,
-      `El usuario con ${username} no puede registrarse siendo menor de 15 años`
+      `El usuario con ${username} no puede registrarse siendo menor de 18 años`
     );
 };

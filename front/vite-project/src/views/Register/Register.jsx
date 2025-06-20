@@ -29,6 +29,7 @@ export default function Register({ onRegisterSucess }) {
         .post("http://localhost:3000/users/register", values)
         .then((res) => {
           if (res.status === 201) {
+            localStorage.setItem("user", JSON.stringify(res.data.user));
             Swal.fire({
               title: "Usuario registrado correctamente",
               icon: "success",
