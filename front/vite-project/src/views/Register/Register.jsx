@@ -3,9 +3,11 @@ import { registerFormValidate } from "../../helpers/registerFormValidate";
 import axios from "axios";
 import Swal from "sweetalert2";
 import RegisterStyles from "../Register/Register.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
-export default function Register({ onRegisterSucess }) {
+export default function Register() {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -33,13 +35,15 @@ export default function Register({ onRegisterSucess }) {
             Swal.fire({
               title: "Usuario registrado correctamente",
               icon: "success",
+              timer: 3000,
+              showConfirmButton: false,
+            }).then(() => {
+              navigate("/login"); // Redirige al usuario a la página de login
             });
             formikHelpers.resetForm();
-            if (onRegisterSucess) {
-              onRegisterSucess();
-            }
           }
         })
+
         .catch((err) => {
           if (err.response.data.error.includes("email")) {
             Swal.fire({
