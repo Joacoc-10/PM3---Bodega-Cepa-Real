@@ -4,6 +4,9 @@ import ReservationStyle from "../ReservationsForm/Reservations.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 export default function Reservations({ onReservationSuccess }) {
   const formik = useFormik({
     initialValues: {
@@ -23,7 +26,7 @@ export default function Reservations({ onReservationSuccess }) {
         userId: user.id,
       };
       axios
-        .post(`http://localhost:3000/appointments/schedule`, schedule)
+        .post(`${BACKEND_URL}/appointments/schedule`, schedule)
         .then((res) => {
           if (res.status === 201) {
             Swal.fire({
