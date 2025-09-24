@@ -28,7 +28,7 @@ export default function Register() {
     validate: registerFormValidate,
     onSubmit: (values, formikHelpers) => {
       axios
-        .post("http://localhost:3000/users/register", values)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/users/register`, values)
         .then((res) => {
           if (res.status === 201) {
             localStorage.setItem("user", JSON.stringify(res.data.user));

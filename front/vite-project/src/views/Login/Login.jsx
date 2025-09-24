@@ -18,7 +18,7 @@ export default function Login({ onLoginSucess }) {
     validate: loginFormValidate,
     onSubmit: (values) => {
       axios
-        .post("http://localhost:3000/users/login", values)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, values)
         .then((res) => {
           if (res.status === 200)
             localStorage.setItem("user", JSON.stringify(res.data.user));
