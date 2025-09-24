@@ -18,7 +18,7 @@ export default function Login({ onLoginSucess }) {
     validate: loginFormValidate,
     onSubmit: (values) => {
       axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, values)
+        .post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/login`, values)
         .then((res) => {
           if (res.status === 200)
             localStorage.setItem("user", JSON.stringify(res.data.user));

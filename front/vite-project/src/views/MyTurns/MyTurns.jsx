@@ -50,7 +50,7 @@ export default function MyTurns({ isLogged }) {
     }
 
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/users/${userId}`)
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/${userId}`)
       .then((response) => {
         if (
           response.data &&
@@ -110,7 +110,7 @@ export default function MyTurns({ isLogged }) {
         });
 
         axios
-          .put(`${process.env.REACT_APP_BACKEND_URL}/appointments/cancel/${userId}`)
+          .put(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/appointments/cancel/${userId}`)
           .then((response) => {
             if (response.status === 200) {
               Swal.fire(
