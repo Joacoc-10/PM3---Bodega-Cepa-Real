@@ -12,24 +12,42 @@
   margin-right: 1em;
 }
 
-.fotoAerea {
-  width: 500px;
-  height: 300px;
-  display: block;
-  margin-bottom: 20px;
-  margin: auto;
-}
-
+/* Contenedor de las fotos */
 .contenedorFotos {
   display: flex;
-  gap: 3px;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 15px; 
   margin: 2em 0;
 }
 
-.fotoVertical {
-  width: 300px;
-  height: 300px;
+
+.fotoAerea {
+  width: 100%; 
+  max-width: 500px;
+  height: auto;
   display: block;
-  margin-bottom: 20px;
-  margin: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.fotoVertical {
+  width: 100%; 
+  max-width: 300px; 
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .fotoAerea {
+    flex-basis: calc(33.333% - 15px);
+    height: 300px; 
+  }
+
+  .fotoVertical {
+    flex-basis: calc(33.333% - 15px);
+    height: 300px;
+  }
 }
