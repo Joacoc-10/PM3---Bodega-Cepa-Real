@@ -38,27 +38,38 @@ export default function Register() {
               timer: 3000,
               showConfirmButton: false,
             }).then(() => {
-              navigate("/login"); // Redirige al usuario a la página de login
+              navigate("/login"); 
             });
             formikHelpers.resetForm();
           }
         })
 
         .catch((err) => {
-          if (err.response.data.error.includes("email")) {
+
+          const backendError = err.response.data.error;
+
+          if (typeof backendError === "string") {
+            if (backendError.includes("email")) {
+              Swal.fire({
+                icon: "error",
+                title: `Ya existe un usuario con el email: ${formik.values.email} `,
+              });
+            } else if (backendError.includes("username")) {
+              Swal.fire({
+                icon: "error",
+                title: `Ya existe un usuario con el Nombre de Usuario: ${formik.values.username} `,
+              });
+            } else if (backendError.includes("nDni")) {
+              Swal.fire({
+                icon: "error",
+                title: `Ya existe un usuario con el DNI: ${formik.values.nDni} `,
+              });
+            }
+          } else {
             Swal.fire({
               icon: "error",
-              title: `Ya existe un usaurio con el email: ${formik.values.email} `,
-            });
-          } else if (err.response.data.error.includes("username")) {
-            Swal.fire({
-              icon: "error",
-              title: `Ya existe un usaurio con el Nombre de Usuario: ${formik.values.username} `,
-            });
-          } else if (err.response.data.error.includes("nDni")) {
-            Swal.fire({
-              icon: "error",
-              title: `Ya existe un usaurio con el DNI: ${formik.values.nDni} `,
+              title: "Hubo un problema al registrar el usuario",
+              text: JSON.stringify(backendError),
             });
           }
         });
