@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   database: config.DB_NAME,
   synchronize: config.DB_SYNC,
   logging: config.DB_LOGG,
-  entities: ["src/entities/**/*.ts"],
+  entities: ["dist/entities/**/*.ts"],
   dropSchema: config.DB_DROPSCHEMA,
 });
 
