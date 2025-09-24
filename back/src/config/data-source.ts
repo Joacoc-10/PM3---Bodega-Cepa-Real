@@ -5,14 +5,10 @@ import { Credential } from "../entities/Credential.entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: config.DB_HOST,
-  port: config.DB_PORT,
-  username: config.DB_USERNAME,
-  password: config.DB_PASSWORD,
-  database: config.DB_NAME,
+  url: process.env.DATABASE_URL || `postgres://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`,
+  entities: ["dist/entities/**/*.js"],
   synchronize: config.DB_SYNC,
   logging: config.DB_LOGG,
-  entities: ["dist/entities/**/*.ts"],
   dropSchema: config.DB_DROPSCHEMA,
 });
 
