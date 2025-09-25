@@ -2,7 +2,7 @@ import app from "./server";
 import "reflect-metadata";
 import { AppDataSource } from "./config/data-source";
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 AppDataSource.initialize()
   .then(() => {
