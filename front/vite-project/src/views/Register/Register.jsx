@@ -28,7 +28,10 @@ export default function Register() {
     validate: registerFormValidate,
     onSubmit: (values, formikHelpers) => {
       axios
-        .post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/register`, values)
+        .post(
+          `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/register`,
+          values
+        )
         .then((res) => {
           if (res.status === 201) {
             localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -38,38 +41,45 @@ export default function Register() {
               timer: 3000,
               showConfirmButton: false,
             }).then(() => {
-              navigate("/login"); 
+              navigate("/login");
             });
             formikHelpers.resetForm();
           }
         })
 
         .catch((err) => {
+          if (err.response) {
+            const backendError = err.response.data.error;
 
-          const backendError = err.response.data.error;
-
-          if (typeof backendError === "string") {
-            if (backendError.includes("email")) {
+            if (typeof backendError === "string") {
+              if (backendError.includes("email")) {
+                Swal.fire({
+                  icon: "error",
+                  title: `Ya existe un usuario con el email: ${formik.values.email} `,
+                });
+              } else if (backendError.includes("username")) {
+                Swal.fire({
+                  icon: "error",
+                  title: `Ya existe un usuario con el Nombre de Usuario: ${formik.values.username} `,
+                });
+              } else if (backendError.includes("nDni")) {
+                Swal.fire({
+                  icon: "error",
+                  title: `Ya existe un usuario con el DNI: ${formik.values.nDni} `,
+                });
+              }
+            } else {
               Swal.fire({
                 icon: "error",
-                title: `Ya existe un usuario con el email: ${formik.values.email} `,
-              });
-            } else if (backendError.includes("username")) {
-              Swal.fire({
-                icon: "error",
-                title: `Ya existe un usuario con el Nombre de Usuario: ${formik.values.username} `,
-              });
-            } else if (backendError.includes("nDni")) {
-              Swal.fire({
-                icon: "error",
-                title: `Ya existe un usuario con el DNI: ${formik.values.nDni} `,
+                title: "Hubo un problema al registrar el usuario",
+                text: JSON.stringify(backendError),
               });
             }
           } else {
             Swal.fire({
               icon: "error",
-              title: "Hubo un problema al registrar el usuario",
-              text: JSON.stringify(backendError),
+              title: "Error de conexión",
+              text: "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.",
             });
           }
         });
