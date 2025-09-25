@@ -15,9 +15,6 @@ app.use(cors({
   credentials: true,
 }));
 app.options('*', cors());
-
-console.log("🔍 Montando router en '/'");
-
 app.use("/", router);
 
 export default app;
