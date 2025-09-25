@@ -5,6 +5,9 @@ import router from "./routes";
 
 const app: Application = express();
 
+app.get("/", (req, res) => {
+  res.send("Backend funcionando 🚀");
+});
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors({
@@ -12,8 +15,6 @@ app.use(cors({
   credentials: true,
 }));
 app.options('*', cors());
-app.use(router);
-app.get("/", (req, res) => {
-  res.send("Backend funcionando 🚀");
-});
+app.use("/", router);
+
 export default app;
