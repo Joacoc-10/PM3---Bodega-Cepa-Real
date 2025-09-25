@@ -25,6 +25,8 @@
 
 .navList li a,
 .navList li button {
+  all: unset;
+  cursor: pointer;
   color: rgb(114, 111, 111);
   text-decoration: none;
   font-weight: bold;
