@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import navbarStyle from "./Navbar.module.css";
-import { FaBars } from 'react-icons/fa'; // Importamos el ícono de hamburguesa
+import { FaBars } from 'react-icons/fa'; 
 
 const NavBar = ({ isLogged, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
