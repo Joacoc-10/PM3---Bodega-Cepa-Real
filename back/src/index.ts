@@ -3,11 +3,13 @@ import app from "./server";
 import "reflect-metadata";
 import { AppDataSource } from "./config/data-source";
 
+const PORT = process.env.PORT || config.PORT;
+
 AppDataSource.initialize()
   .then(() => {
     console.log("Conexion a la base de datos realizada con exito");
-    app.listen(config.PORT, () => {
-      console.log(`El servidor esta escuchando en el puerto ${config.PORT}`);
+    app.listen(PORT, () => {
+      console.log(`El servidor esta escuchando en el puerto ${PORT}`);
     });
   })
   .catch((error) => {
