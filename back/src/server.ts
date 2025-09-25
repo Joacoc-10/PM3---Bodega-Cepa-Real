@@ -8,9 +8,12 @@ const app: Application = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors({
-  origin: '*', 
+  origin: "https://bodega-cepa-real.vercel.app",
   credentials: true,
 }));
+app.options('*', cors());
 app.use(router);
-
+app.get("/", (req, res) => {
+  res.send("Backend funcionando 🚀");
+});
 export default app;
