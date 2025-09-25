@@ -7,14 +7,10 @@ const User_entity_1 = require("../entities/User.entity");
 const Credential_entity_1 = require("../entities/Credential.entity");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    host: envs_1.config.DB_HOST,
-    port: envs_1.config.DB_PORT,
-    username: envs_1.config.DB_USERNAME,
-    password: envs_1.config.DB_PASSWORD,
-    database: envs_1.config.DB_NAME,
+    url: process.env.DATABASE_URL || `postgres://${envs_1.config.DB_USERNAME}:${envs_1.config.DB_PASSWORD}@${envs_1.config.DB_HOST}:${envs_1.config.DB_PORT}/${envs_1.config.DB_NAME}`,
+    entities: ["dist/entities/**/*.js"],
     synchronize: envs_1.config.DB_SYNC,
     logging: envs_1.config.DB_LOGG,
-    entities: ["src/entities/**/*.ts"],
     dropSchema: envs_1.config.DB_DROPSCHEMA,
 });
 exports.UserModel = exports.AppDataSource.getRepository(User_entity_1.User);
